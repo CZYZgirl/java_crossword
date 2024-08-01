@@ -35,7 +35,8 @@ class _CrosswordPageState extends State<CrosswordPage> {
       _currentY = y;
       if (_currentWordNumber != null) {
         _hint = _model.getHint(_currentWordNumber!) ?? '';
-        // Focus on the input field when a number cell is clicked
+
+        // focus on the input field when a number cell is clicked
         FocusScope.of(context).requestFocus(_focusNode);
       } else {
         _hint = '';
@@ -72,6 +73,7 @@ class _CrosswordPageState extends State<CrosswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Center(
         child: Container(
           width: 400.0,
@@ -84,14 +86,15 @@ class _CrosswordPageState extends State<CrosswordPage> {
                 color: Colors.black.withOpacity(0.1),
                 spreadRadius: 5,
                 blurRadius: 7,
-                offset: Offset(0, 3), // (x, y) 이동
+                offset: Offset(0, 3),
               ),
             ],
           ),
           child: Column(
             children: [
               ClipRRect(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(8.0)), // 상단만 둥글게
+                // round top
+                borderRadius: BorderRadius.vertical(top: Radius.circular(8.0)),
                 child: Container(
                   width: 400.0,
                   height: 60.0,
@@ -101,8 +104,7 @@ class _CrosswordPageState extends State<CrosswordPage> {
                       'Java CrossWord',
                       style: TextStyle(
                         fontSize: 30.0,
-                        // fontWeight: FontWeight.bold,
-                        color: Colors.white, // 텍스트 색상 변경 가능
+                        color: Colors.white,
                       ),
                     ),
                   ),
@@ -126,7 +128,7 @@ class _CrosswordPageState extends State<CrosswordPage> {
                     return GestureDetector(
                       onTap: () => _handleCellTap(x, y),
                       child: Container(
-                        // blank cell
+                        // cell color
                         color: isWordCell
                             ? (isCorrectWord ? Color(0XFFDAA38F) : Color(0XFFE9D7C0))
                             : Color(0XFF92ADA4),
@@ -167,8 +169,8 @@ class _CrosswordPageState extends State<CrosswordPage> {
                   decoration: InputDecoration(
                     labelText: '입력하세요',
                     labelStyle: TextStyle(
-                      color: Color(0XFF92ADA4), // 힌트 텍스트 색상
-                      fontSize: 18, // 힌트 텍스트 크기
+                      color: Color(0XFF92ADA4),
+                      fontSize: 18,
                     ),
                     border: OutlineInputBorder(
                       borderSide: BorderSide(color: Color(0XFFDAA38F), width: 2.0),
@@ -199,7 +201,6 @@ class _CrosswordPageState extends State<CrosswordPage> {
                   '정답 확인',
                   style: TextStyle(
                     fontSize: 18,
-                    // fontWeight: FontWeight.bold,
                     color: Colors.white,
                   ),
                 ),
