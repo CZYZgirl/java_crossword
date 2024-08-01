@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 class CrosswordModel {
   final int gridSize = 16;
-  final List<List<String?>> crosswordGrid; // To store the letters
-  final Map<int, String> hints; // To store hints for each word
-  final Map<int, List<int>> wordPositions; // To store the positions of words
-  final Map<int, int> wordLengths; // To store the length of each word
-  final Map<int, bool> isHorizontal; // To store the orientation of each word
-  final Set<int> _correctWords; // To track correct words
-  final Map<int, String> words; // To store the actual words
-  final Map<int, int> _wordNumbers; // To track the number for each word
+  final List<List<String?>> crosswordGrid; // store the letters
+  final Map<int, String> hints; // store hints for each word
+  final Map<int, List<int>> wordPositions; // store the positions of words
+  final Map<int, int> wordLengths; // store the length of each word
+  final Map<int, bool> isHorizontal; // store the orientation of each word
+  final Set<int> _correctWords; // track correct words
+  final Map<int, String> words; // store the actual words
+  final Map<int, int> _wordNumbers; // track the number for each word
 
   int _nextWordNumber = 1;
 
@@ -25,27 +25,29 @@ class CrosswordModel {
         _correctWords = {},
         words = {},
         _wordNumbers = {} {
-    addWord('JAVA', '명령행에서 자바 프로그램을 실행할 때 호출할 프로그램', 1, 0, true);  // Horizontal word
-    addWord('ARRAYS', '‘무언가’를 여러개 집어 넣는 것', 1, 1, false);  // Vertical word
-    addWord('BRANCH', '둘 다 할 수는 없음', 3, 0, true);  // Horizontal word
-    addWord('WHILE', '조건 안에서 반복', 2, 5, false);  // Vertical word
-    addWord('SYSTEMOUTPRINT', '무언가를 출력할 때 쓰는 것', 6, 1, true);  // Horizontal word
-    addWord('STATIC', '특이한 변경자', 6, 3, false);  // Vertical word
-    addWord('STRING', '문자 여러 개가 모여 있는 것', 9, 2, true);  // Horizontal word
-    addWord('MAIN', '하나만 있어야 함', 6, 6, false);  // Vertical word
-    addWord('INT', '숫자 변수 타입', 4, 5, true);  // Horizontal word
-    addWord('FLOAT', '정수가 아닌 숫자 타입', 0, 7, false);  // Vertical word
-    addWord('LOOP', '같은 내용을 반복시키는 것', 1, 7, true);  // Horizontal word
-    addWord('VOID', '빈손으로 돌아옴', 0, 9, false);  // Vertical word
-    addWord('DC', '노트북 전원의 약자', 3, 9, true);  // Horizontal word
-    addWord('COMPILER', '소스 코드를 처리하는 것', 3, 10, false);  // Vertical word
-    addWord('VARIABLE', '고정할 수 없음', 3, 12, false);  // Vertical word
-    addWord('DECLARE', '새로운 클래스나 메서드가 있음을 알리는 것', 9, 9, true);  // Horizontal word
-    addWord('COMMAND', '프롬프트를 사용하는 용도', 13, 9, true);  // Horizontal word
-    addWord('METHOD', '어떤 일을 처리하게 해 주는 것', 8, 15, false);  // Vertical word
-    addWord('PUBLIC', '공개된 것', 0, 15, false);  // Vertical word
-    addWord('IC', '칩의 약자', 5, 14, true);  // Horizontal word
-    addWord('JVM', '바이트코드를 처리하는 것', 11, 11, false);  // Vertical word
+
+    // true == horizontal word, false == vertical word
+    addWord('JAVA', '명령행에서 자바 프로그램을 실행할 때 호출할 프로그램', 1, 0, true);
+    addWord('ARRAYS', '‘무언가’를 여러개 집어 넣는 것', 1, 1, false);
+    addWord('BRANCH', '둘 다 할 수는 없음', 3, 0, true);
+    addWord('WHILE', '조건 안에서 반복', 2, 5, false);
+    addWord('SYSTEMOUTPRINT', '무언가를 출력할 때 쓰는 것', 6, 1, true);
+    addWord('STATIC', '특이한 변경자', 6, 3, false);
+    addWord('STRING', '문자 여러 개가 모여 있는 것', 9, 2, true);
+    addWord('MAIN', '하나만 있어야 함', 6, 6, false);
+    addWord('INT', '숫자 변수 타입', 4, 5, true);
+    addWord('FLOAT', '정수가 아닌 숫자 타입', 0, 7, false);
+    addWord('LOOP', '같은 내용을 반복시키는 것', 1, 7, true);
+    addWord('VOID', '빈손으로 돌아옴', 0, 9, false);
+    addWord('DC', '노트북 전원의 약자', 3, 9, true);
+    addWord('COMPILER', '소스 코드를 처리하는 것', 3, 10, false);
+    addWord('VARIABLE', '고정할 수 없음', 3, 12, false);
+    addWord('DECLARE', '새로운 클래스나 메서드가 있음을 알리는 것', 9, 9, true);
+    addWord('COMMAND', '프롬프트를 사용하는 용도', 13, 9, true);
+    addWord('METHOD', '어떤 일을 처리하게 해 주는 것', 8, 15, false);
+    addWord('PUBLIC', '공개된 것', 0, 15, false);
+    addWord('IC', '칩의 약자', 5, 14, true);
+    addWord('JVM', '바이트코드를 처리하는 것', 11, 11, false);
   }
 
   void addWord(String word, String hint, int startX, int startY, bool isHorizontal) {
@@ -57,16 +59,16 @@ class CrosswordModel {
     this.isHorizontal[wordNumber] = isHorizontal;
     _wordNumbers[wordNumber] = wordNumber;
 
-    // Calculate the end position of the word
+    // calculate the end position of the word
     int endX = isHorizontal ? startX : startX + word.length - 1;
     int endY = isHorizontal ? startY + word.length - 1 : startY;
 
-    // Check if the word fits within the grid
+    // check if the word fits within the grid
     if (endX >= gridSize || endY >= gridSize) {
       throw RangeError('Word "${word}" exceeds the grid boundaries.');
     }
 
-    // Check if the word overlaps correctly
+    // check if the word overlaps correctly
     for (int i = 0; i < word.length; i++) {
       int x = isHorizontal ? startX : startX + i;
       int y = isHorizontal ? startY + i : startY;
@@ -75,7 +77,7 @@ class CrosswordModel {
       }
     }
 
-    // Place the word on the grid
+    // place the word on the grid
     for (int i = 0; i < word.length; i++) {
       int x = isHorizontal ? startX : startX + i;
       int y = isHorizontal ? startY + i : startY;
