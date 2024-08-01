@@ -33,4 +33,5 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.CROSSWORD_ACTION_KEY }}
+
           publish_dir: ./build/web
